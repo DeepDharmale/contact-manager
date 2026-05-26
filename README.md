@@ -1,1 +1,1 @@
-A smart and secure Contact Manager web application built using Spring Boot, Spring Security, Thymeleaf, Hibernate/JPA, and MySQL.This application helps users manage personal contacts efficiently with authentication and CRUD operations.
+A modern and secure Contact Manager application developed using the Java Spring Boot ecosystem, including Spring Security, Thymeleaf, Hibernate/JPA, and MySQL. The application enables users to securely store, manage, update, and organize personal contacts through an intuitive web interface with authentication and full CRUD functionality.
