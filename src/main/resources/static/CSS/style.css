@@ -1,38 +1,73 @@
-body{
-	background: #e2e2e2!important;
+/* ========================
+   General
+======================== */
+
+body {
+    background: #f0f2f5 !important;
+    font-family: Arial, sans-serif;
 }
+
+/* ========================
+   Navbar
+======================== */
 
 .bg-primary {
     background-color: #009688 !important;
 }
+
+.navbar-brand {
+    font-size: 18px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* Prevent navbar items from wrapping/dropping */
+.navbar-nav {
+    flex-direction: row !important;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: nowrap;
+}
+
+.navbar-nav .nav-item {
+    white-space: nowrap;
+}
+
+.navbar-nav .nav-link {
+    padding: 6px 12px !important;
+}
+
+/* ========================
+   Banner
+======================== */
 
 .banner {
     width: 100%;
     height: 88vh;
     background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
                 url("../img/banner.jpg");
-   background-size: cover;        
-    background-position: center;   
-    background-repeat: no-repeat;  
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     color: white;
 }
 
-.my-card{
-	padding:20px;
-	background:#ffff;
+/* ========================
+   Generic Card
+======================== */
+
+.my-card {
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
 }
 
+/* ========================
+   Login
+======================== */
 
-
-/* Login */
-
-body{
-    background: linear-gradient(135deg,#74ebd5,#9face6);
-    font-family: Arial, sans-serif;
-}
-
-/* Container */
-.login-container{
+.login-container {
     width: 100%;
     min-height: 100vh;
     display: flex;
@@ -40,202 +75,219 @@ body{
     align-items: center;
 }
 
-/* Login Card */
-.login-form{
-    width: 500px;
+.login-form {
+    width: 460px;
     background: #fff;
-    padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    animation: fadeIn 0.8s ease-in-out;
+    padding: 40px 44px;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    animation: fadeIn 0.6s ease-in-out;
 }
 
-/* Heading */
-.login-form h3{
+.login-form h3 {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 28px;
     color: #333;
     font-weight: bold;
+    font-size: 22px;
 }
 
-/* Form Group */
-.form-group{
-    margin-bottom: 20px;
+.form-group {
+    margin-bottom: 18px;
 }
 
-/* Input Box */
-.form-control{
+.form-control {
     width: 100%;
-    padding: 12px 15px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
+    padding: 11px 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
     outline: none;
-    transition: 0.3s;
+    transition: border-color 0.25s, box-shadow 0.25s;
     font-size: 15px;
+    background: #fafafa;
 }
 
-/* Input Focus */
-.form-control:focus{
-    border-color: #6c63ff;
-    box-shadow: 0 0 8px rgba(108,99,255,0.4);
+.form-control:focus {
+    border-color: #009688;
+    box-shadow: 0 0 0 3px rgba(0,150,136,0.15);
+    background: #fff;
 }
 
-/* Button */
-.btnSubmit{
+.btnSubmit {
     width: 100%;
     padding: 12px;
     border: none;
-    border-radius: 10px;
-    background: linear-gradient(135deg,#6c63ff,#5a54e8);
+    border-radius: 8px;
+    background: rgb(0, 128, 255);
     color: white;
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
-    transition: 0.3s;
+    transition: background 0.2s, transform 0.15s;
+    margin-top: 6px;
 }
 
-/* Button Hover */
-.btnSubmit:hover{
-    transform: translateY(-2px);
-    background: linear-gradient(135deg,#5a54e8,#483fd6);
+.btnSubmit:hover {
+    transform: translateY(-1px);
 }
 
 .link-row {
     display: flex;
     justify-content: space-between;
-    margin-top: 15px;
+    margin-top: 16px;
 }
 
-/* Forgot Password */
-.ForgetPwd {
+
+
+.ForgetPwd{
     text-decoration: none;
-    color: #6c63ff;
+    font-size: 14px;
     font-weight: bold;
-    margin-right: 50px;
+    margin-left: 20px;
 }
 
-.ForgetPwd:hover {
-    text-decoration: underline;
-}
-
-/* Register */
 .register {
     text-decoration: none;
-    color: #6c63ff;
+    font-size: 14px;
     font-weight: bold;
-    margin-left: 130px;
+    margin-right: 90px;
 }
 
+.ForgetPwd:hover,
 .register:hover {
     text-decoration: underline;
 }
 
-/* Animation */
-@keyframes fadeIn{
-    from{
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to{
-        opacity: 1;
-        transform: translateY(0);
-    }
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-16px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
-    
-/* Sidebar */
 
-.sidebar{
-    width: 250px;
-    background: white;
-    height: 100vh;
+/* ========================
+   Sidebar
+======================== */
+
+.sidebar {
+    width: 240px;
+    background: #ffffff;
+    height: calc(100vh - 56px);
     position: fixed;
-    top: 0;
+    top: 56px;
     left: 0;
-    padding-top: 60px;
     overflow-y: auto;
-    transition: all 0.3s ease;
-    z-index: 999;
-    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    transition: left 0.3s ease;
+    z-index: 99999999999999;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.07);
+    border-right: 1px solid #e8e8e8;
 }
 
-.sidebar a{
-    display: block;
-    width: 100%;
-    padding: 14px 25px;
+.sidebar a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
     text-decoration: none;
     color: #555;
-    font-size: 16px;
-    transition: 0.3s;
+    font-size: 15px;
+    transition: background 0.2s, color 0.2s, padding-left 0.2s;
 }
 
-.sidebar a:hover{
-    background: #e2e2e2;
-    color: black;
-    padding-left: 35px;
+.sidebar a:hover {
+    background: #e8f5f3;
+    color: #009688;
+    padding-left: 28px;
 }
 
-.sidebar .divider{
+.sidebar .item i {
+    font-size: 17px;
+    width: 20px;
+    text-align: center;
+}
+
+.sidebar .divider {
     height: 1px;
-    width: 100%;
-    background: #e2e2e2;
-    margin-top: 10px;
+    background: #efefef;
+    margin: 8px 16px;
 }
 
-.sidebar .crossbtn{
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    font-size: 30px;
+/* Cross button — always visible inside sidebar */
+.sidebar .crossbtn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 10px 16px 4px;
+    font-size: 26px;
     cursor: pointer;
-    display: none;
+    color: #888;
+    user-select: none;
 }
 
-/* Sidebar Icons */
-
-.sidebar .item i{
-    margin-right: 12px;
+.sidebar .crossbtn:hover {
+    color: #333;
 }
 
-/* Main Content */
+/* ========================
+   Main Content
+======================== */
 
-.content{
+.content {
     margin-left: 250px;
-    padding: 20px;
-    transition: all 0.3s ease;
+    margin-top: 1px;
+    padding: 5px;
+    transition: margin-left 0.3s ease;
 }
 
-/* Menu Button */
+/* Desktop: collapse sidebar on toggle */
+.content.sidebar-collapsed {
+    margin-left: 0;
+}
 
-.menu-btn{
-    font-size: 25px;
+.sidebar.active ~ .content,
+body:has(.sidebar:not(.active)) .content {
+    /* handled via JS class toggle */
+}
+
+/* Menu Button — shown on mobile only */
+.menu-btn {
+    font-size: 24px;
     cursor: pointer;
     display: none;
 }
 
-/* Responsive */
+/* ========================
+   Responsive
+======================== */
 
-@media only screen and (max-width: 768px){
+@media only screen and (max-width: 768px) {
 
-    .sidebar{
-        width: 250px;
-        left: -250px;
+    .sidebar {
+        left: -240px;
         height: 100vh;
+        top: 0;
     }
 
-    .sidebar.active{
+    .sidebar.active {
         left: 0;
     }
 
-    .sidebar .crossbtn{
-        display: block;
-    }
-
-    .content{
+    .content {
         margin-left: 0;
         width: 100%;
     }
 
-    .menu-btn{
+    .menu-btn {
         display: inline-block;
+    }
+
+    .login-form {
+        width: 92%;
+        padding: 30px 24px;
+    }
+}
+
+@media only screen and (min-width: 769px) {
+    /* On desktop, crossbtn collapses the sidebar off-screen */
+    .sidebar.collapsed {
+        left: -240px;
     }
 }
