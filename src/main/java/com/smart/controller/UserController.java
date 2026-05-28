@@ -1,12 +1,13 @@
 package com.smart.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -158,6 +159,22 @@ public class UserController {
     	m.addAttribute("totalPages",contacts.getTotalPages());
     	
     	return "normal/show_contacts";
+    }
+    
+    //showing particular contact details
+    
+    @RequestMapping("/{cId}/contact")
+    public String showContactDetail(@PathVariable("cId") Integer cId,
+                                    Model model) {
+
+        System.out.println("CID: " + cId);
+
+        Contact contact = this.contactRepository.findById(cId)
+                .orElseThrow(() -> new RuntimeException("Contact not found"));
+
+        model.addAttribute("contact", contact);
+
+        return "normal/contact_detail";
     }
 
 }
