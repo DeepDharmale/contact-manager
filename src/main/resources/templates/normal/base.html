@@ -123,6 +123,21 @@
            style="font-size:25px;"></i>
 
     </span>
+    
+    
+<!-- message box -->
+
+<div th:if="${message}" class="container">
+
+    <div th:classappend="${'alert-' + message.type}"
+         class="alert text-center"
+         role="alert">
+
+        <span th:text="${message.content}"></span>
+
+    </div>
+
+</div>
 
     <!-- Main Content -->
     <div th:replace="${content}"></div>
