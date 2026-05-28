@@ -9,83 +9,69 @@
 </head>
 
 <body>
-
 <section>
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
 
-<div class="container mt-4">
-
-    <div class="row justify-content-center">
-
-        <div class="col-md-6">
-
-            <!-- Profile Card -->
-            <div class="card shadow-lg border-0 rounded-4">
-
-                <div class="card-body text-center p-4">
-
-                    <!-- Profile Image -->
-                    <img th:src="@{'/img/' + ${contact.image}}"
-                         alt="Contact Image"
-                         class="rounded-circle shadow mb-3"
-                         style="width: 150px; height: 150px; object-fit: cover;">
-
-                    <!-- Name -->
-                    <h3 class="fw-bold mb-1" th:text="${contact.name}">
-                        Contact Name
-                    </h3>
-
-                    <!-- Work -->
-                    <p class="text-muted mb-3" th:text="${contact.work}">
-                        Work
-                    </p>
-
-                    <hr>
-
-                    <!-- Contact Info -->
-                    <div class="text-start">
-
-                        <p>
-                            <i class="fa fa-envelope text-primary me-2"></i>
-                            <span th:text="${contact.email}">Email</span>
-                        </p>
-
-                        <p>
-                            <i class="fa fa-phone text-success me-2"></i>
-                            <span th:text="${contact.phone}">Phone</span>
-                        </p>
-
-                        <p>
-                            <i class="fa fa-info-circle text-warning me-2"></i>
-                            <span th:text="${contact.description}">Description</span>
-                        </p>
-
-                    </div>
-
-                    <!-- Buttons -->
-                    <div class="mt-4">
-
-                        <a th:href="@{'/user/delete/' + ${contact.cId}}"
-                           class="btn btn-danger btn-sm">
-                            Delete
-                        </a>
-
-                        <a th:href="@{'/user/update/' + ${contact.cId}}"
-                           class="btn btn-primary btn-sm">
-                            Update
-                        </a>
-
-                    </div>
-
+                <!-- No permission message -->
+                <div th:if="${contact == null}" class="alert alert-danger text-center">
+                    You don't have permission to see this contact.
                 </div>
+
+                <!-- Profile Card -->
+                <div class="card shadow-lg border-0 rounded-4" th:if="${contact != null}">
+                    <div class="card-body text-center p-4">
+
+                        <!-- Profile Image -->
+                        <img th:src="@{'/img/' + ${contact.image}}"
+                             alt="Contact Image"
+                             class="rounded-circle shadow mb-3"
+                             style="width: 150px; height: 150px; object-fit: cover;">
+
+                        <!-- Name -->
+                        <h3 class="fw-bold mb-1" th:text="${contact.name}">Contact Name</h3>
+
+                        <!-- Work -->
+                        <p class="text-muted mb-3" th:text="${contact.work}">Work</p>
+
+                        <hr>
+
+                        <!-- Contact Info -->
+                        <div class="text-start">
+
+                            <p>
+                                <i class="fa fa-envelope text-primary me-2"></i>
+                                <span th:text="${contact.email}">Email</span>
+                            </p>
+
+                            <p>
+                                <i class="fa fa-phone text-success me-2"></i>
+                                <span th:text="${contact.phone}">Phone</span>
+                            </p>
+
+                            <p>
+                                <i class="fa fa-info-circle text-warning me-2"></i>
+                                <span th:text="${contact.description}">Description</span>
+                            </p>
+
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="mt-4">
+                            <a th:href="@{'/user/delete/' + ${contact.cId}}"
+                               class="btn btn-danger btn-sm">Delete</a>
+
+                            <a th:href="@{'/user/update/' + ${contact.cId}}"
+                               class="btn btn-primary btn-sm">Update</a>
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
-
         </div>
-
     </div>
-
-</div>
-
 </section>
-
 </body>
 </html>

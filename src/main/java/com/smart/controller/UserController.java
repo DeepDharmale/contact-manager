@@ -1,7 +1,5 @@
 package com.smart.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -36,43 +34,34 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
-    
+
     @Autowired
     private ContactRepository contactRepository;
 
-    // method for adding common data to response
+    // adds common data (logged-in user) to every response
     @ModelAttribute
     public void addCommonData(Model m, Principal principal) {
-
         String userName = principal.getName();
-
         User user = userRepository.getUserByUserName(userName);
-
         m.addAttribute("user", user);
     }
 
-    // dashboard Home
+    // dashboard
     @RequestMapping("/index")
     public String dashboard(Model model) {
-
         model.addAttribute("title", "User dashboard");
-
         return "normal/user_dashboard";
     }
 
-    // open add form handler
+    // open add contact form
     @GetMapping("/add-contact")
     public String openAddContactForm(Model model) {
-
         model.addAttribute("title", "Add Contact");
-
         model.addAttribute("contact", new Contact());
-
         return "normal/add_contact_form";
     }
 
-    // processing add contact form
-
+    // process add contact form
     @PostMapping("/process-contact")
     public String processContact(
             @ModelAttribute Contact contact,
@@ -81,21 +70,12 @@ public class UserController {
             RedirectAttributes redirectAttributes) {
 
         try {
-
             String name = principal.getName();
-
             User user = this.userRepository.getUserByUserName(name);
-            
-          
 
-            // processing and uploading file
-            if(file.isEmpty()) {
-
-                System.out.println("File is empty");
+            if (file.isEmpty()) {
                 contact.setImage("contact.png");
-
             } else {
-
                 contact.setImage(file.getOriginalFilename());
 
                 File saveFile = new ClassPathResource("static/img").getFile();
@@ -104,77 +84,62 @@ public class UserController {
                         + File.separator
                         + file.getOriginalFilename());
 
-                Files.copy(file.getInputStream(),
-                        path,
-                        StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
             }
 
             contact.setUser(user);
-
             user.getContact().add(contact);
-
             this.userRepository.save(user);
 
-            System.out.println("Added to database");
-
-            // success message
-            redirectAttributes.addFlashAttribute(
-                    "message",
+            redirectAttributes.addFlashAttribute("message",
                     new Message("Your contact is added!! Add more...", "success"));
 
         } catch (Exception e) {
-
-            System.out.println("Error: " + e.getMessage());
             e.printStackTrace();
-
-            // error message
-            redirectAttributes.addFlashAttribute(
-                    "message",
+            redirectAttributes.addFlashAttribute("message",
                     new Message("Something went wrong !! Try again", "danger"));
         }
 
         return "redirect:/user/add-contact";
     }
-    
-    
-    //show contact handler
-    //per page =5[n]
-    //current page = 0[page]
-    
-    
+
+    // show contacts with pagination
     @GetMapping("/show-contacts/{page}")
-    public String showContact(@PathVariable("page") Integer page, Model m,Principal principal) {
-    	m.addAttribute("title", "Show User Contacts");
-    	//contact list is in user template
-    	
-    	String userName = principal.getName();
-    	User user = this.userRepository.getUserByUserName(userName);
-    	
-    	PageRequest pageable = PageRequest.of(page, 5);
-    	
-    	Page<Contact> contacts = this.contactRepository.findByUser(user.getId(),pageable);
-    	m.addAttribute("contacts",contacts);
-    	m.addAttribute("currentPage",page);
-    	
-    	m.addAttribute("totalPages",contacts.getTotalPages());
-    	
-    	return "normal/show_contacts";
+    public String showContact(@PathVariable("page") Integer page, Model m, Principal principal) {
+        m.addAttribute("title", "Show User Contacts");
+
+        String userName = principal.getName();
+        User user = this.userRepository.getUserByUserName(userName);
+
+        PageRequest pageable = PageRequest.of(page, 5);
+        Page<Contact> contacts = this.contactRepository.findByUser(user.getId(), pageable);
+
+        m.addAttribute("contacts", contacts);
+        m.addAttribute("currentPage", page);
+        m.addAttribute("totalPages", contacts.getTotalPages());
+
+        return "normal/show_contacts";
     }
-    
-    //showing particular contact details
-    
+
+    // show particular contact detail
     @RequestMapping("/{cId}/contact")
     public String showContactDetail(@PathVariable("cId") Integer cId,
-                                    Model model) {
+                                    Model model, Principal principal) {
 
-        System.out.println("CID: " + cId);
+        String userName = principal.getName();
+        User user = this.userRepository.getUserByUserName(userName);
 
-        Contact contact = this.contactRepository.findById(cId)
-                .orElseThrow(() -> new RuntimeException("Contact not found"));
+        Contact contact = this.contactRepository.findById(cId).orElse(null);
 
-        model.addAttribute("contact", contact);
+        if (contact == null) {
+            return "redirect:/user/show-contacts/0";
+        }
+
+        // use .equals() to safely compare Integer objects
+        if (user.getId() == contact.getUser().getId()) {
+            model.addAttribute("contact", contact);
+        }
 
         return "normal/contact_detail";
     }
-
 }
