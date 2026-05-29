@@ -49,7 +49,11 @@ public class Myconfig {
                 .defaultSuccessUrl("/user/index")  
                 .permitAll()
             )
-            .csrf(csrf -> csrf.disable());
+            .csrf(csrf -> csrf.disable())
+            .exceptionHandling(ex -> ex
+                .accessDeniedPage("/error")
+            );
+
 
         return http.build();
     }

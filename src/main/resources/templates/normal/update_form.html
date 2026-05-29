@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="normal/base :: layout(~{::section})">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Update Contact</title>
+</head>
+
+<body>
+
+<section>
+
+    <div class="card">
+        <div class="card-body">
+
+            <h1 class="text-center">Update Contact</h1>
+
+            <div class="container-fluid mt-1">
+                <div class="row">
+                    <div class="col-md-10 offset-md-1">
+
+                        <!-- Action points to /user/process-update -->
+                        <form th:action="@{/user/process-update}"
+                              th:object="${contact}"
+                              method="POST"
+                              enctype="multipart/form-data"
+                              class="mt-2">
+
+                            <!-- Hidden Contact ID -->
+                            <input type="hidden" th:field="*{cId}" />
+
+                            <!-- Display Current Profile Image -->
+                            <div class="container text-center mb-3">
+                                <img style="width:250px; height:250px;"
+                                     class="my_profile_picture mb-3"
+                                     th:src="@{'/img/' + ${contact.image}}"
+                                     alt="Current Profile Image" />
+                            </div>
+
+                            <!-- New Profile Image Upload -->
+                            <div class="form-group mb-3">
+                                <label>Select New Profile Image (leave blank to keep current)</label>
+                                <input type="file"
+                                       name="profileImage"
+                                       class="form-control" />
+                            </div>
+
+                            <!-- Name -->
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text mr-3">
+                                        <i class="fa fa-user"></i>
+                                    </div>
+                                </div>
+                                <input required
+                                       type="text"
+                                       th:field="*{name}"
+                                       placeholder="Enter name here"
+                                       class="form-control" />
+                            </div>
+
+                            <!-- Second Name -->
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text mr-3">
+                                        <i class="fa fa-user"></i>
+                                    </div>
+                                </div>
+                                <input type="text"
+                                       th:field="*{secondName}"
+                                       placeholder="Enter second name"
+                                       class="form-control" />
+                            </div>
+
+                            <!-- Work -->
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text mr-3">
+                                        <i class="fa fa-briefcase"></i>
+                                    </div>
+                                </div>
+                                <input type="text"
+                                       th:field="*{work}"
+                                       placeholder="Enter work"
+                                       class="form-control" />
+                            </div>
+
+                            <!-- Email -->
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text mr-3">
+                                        <i class="fa fa-envelope"></i>
+                                    </div>
+                                </div>
+                                <input type="email"
+                                       th:field="*{email}"
+                                       placeholder="Enter email"
+                                       class="form-control" />
+                            </div>
+
+                            <!-- Phone -->
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text mr-3">
+                                        <i class="fa fa-phone"></i>
+                                    </div>
+                                </div>
+                                <input required
+                                       minlength="10"
+                                       maxlength="13"
+                                       type="tel"
+                                       th:field="*{phone}"
+                                       placeholder="Enter phone number"
+                                       class="form-control" />
+                            </div>
+
+                            <!-- Description -->
+                            <div class="form-group mb-3">
+                                <textarea th:field="*{description}"
+                                          placeholder="Enter contact description"
+                                          rows="5"
+                                          class="form-control"></textarea>
+                            </div>
+
+                            <!-- Buttons -->
+                            <div class="container text-center">
+                                <button type="submit" class="btn btn-primary">
+                                    Update Contact
+                                </button>
+                                <a th:href="@{/user/show-contacts/0}"
+                                   class="btn btn-secondary ms-2">
+                                    Cancel
+                                </a>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
+</body>
+</html>

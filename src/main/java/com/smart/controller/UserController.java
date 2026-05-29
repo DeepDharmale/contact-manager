@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -163,12 +164,67 @@ public class UserController {
     	this.contactRepository.delete(contact);
     	
     	session.setAttribute("message", new Message("Contact deleted successfully!!", "success"));
-    	
-    	
-    
-    	
-    	
-    	
+    	  	
     	return "redirect:/user/show-contacts/0";
     }
+    
+    //open update form handler
+    
+    @PostMapping("/update-contact/{cId}")
+    public String updateForm(@PathVariable("cId") int cId, Model m) {
+
+        m.addAttribute("title", "Update Contact");
+
+        Contact contact = this.contactRepository.findById(cId).get();
+
+        m.addAttribute("contact", contact);
+
+        return "normal/update_form";
+    }
+    
+    
+    //update contact handler
+    
+    @RequestMapping(value = "/process-update", method = RequestMethod.POST)
+    public String UpdateHandler(@ModelAttribute Contact contact,@RequestParam("profileImage") MultipartFile file,Model m,HttpSession session,Principal principal)
+    {
+    	try {
+    		
+    		//old contact details
+    		
+    		Contact oldContactDetail = this.contactRepository.findById(contact.getcId()).get();
+    		
+    		//image
+    		if(file.isEmpty())
+    		{
+    			//file is empty
+    			
+    			//delete old photo
+    			
+    			// update new photo
+    		}
+    		else {
+    			contact.setImage(oldContactDetail.getImage());
+    		}
+    		
+    		User user = this.userRepository.getUserByUserName(principal.getName());
+    		
+    		contact.setUser(user);
+    		 
+    		this.contactRepository.save(contact);
+    		
+    		
+    	}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+    	
+    	System.out.println(contact.getName());
+    	System.out.println(contact.getcId());
+    	return "normal/update_form";
+    }
+    
+    
+    
+    
 }
