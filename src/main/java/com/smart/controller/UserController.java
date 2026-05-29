@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -27,6 +28,8 @@ import com.smart.dao.UserRepository;
 import com.smart.entites.Contact;
 import com.smart.entites.User;
 import com.smart.helper.Message;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/user")
@@ -141,5 +144,31 @@ public class UserController {
         }
 
         return "normal/contact_detail";
+    }
+    
+    //delete contact handler
+    
+    @GetMapping("/delete/{cId}")
+    public String deltecontact(@PathVariable("cId") Integer cId, Model model,HttpSession session)
+    {
+    	Optional<Contact> contactOptional = this.contactRepository.findById(cId);
+    	Contact contact = contactOptional.get();
+    	
+    	
+    	//checking if the contact is present or not
+    	if(contact == null)
+		{
+			return "redirect:/user/show-contacts/0";
+		}
+    	this.contactRepository.delete(contact);
+    	
+    	session.setAttribute("message", new Message("Contact deleted successfully!!", "success"));
+    	
+    	
+    
+    	
+    	
+    	
+    	return "redirect:/user/show-contacts/0";
     }
 }
