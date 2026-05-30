@@ -192,7 +192,7 @@ public class UserController {
     		
     		//old contact details
     		
-    		Contact oldContactDetail = this.contactRepository.findById(contact.getcId()).get();
+    		Contact oldContactDetail = this.contactRepository.findById((int) contact.getcId()).get();
     		
     		//image
     		if(file.isEmpty())
