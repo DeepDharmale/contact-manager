@@ -186,44 +186,72 @@ public class UserController {
     //update contact handler
     
     @RequestMapping(value = "/process-update", method = RequestMethod.POST)
-    public String UpdateHandler(@ModelAttribute Contact contact,@RequestParam("profileImage") MultipartFile file,Model m,HttpSession session,Principal principal)
-    {
-    	try {
-    		
-    		//old contact details
-    		
-    		Contact oldContactDetail = this.contactRepository.findById((int) contact.getcId()).get();
-    		
-    		//image
-    		if(file.isEmpty())
-    		{
-    			//file is empty
-    			
-    			//delete old photo
-    			
-    			// update new photo
-    		}
-    		else {
-    			contact.setImage(oldContactDetail.getImage());
-    		}
-    		
-    		User user = this.userRepository.getUserByUserName(principal.getName());
-    		
-    		contact.setUser(user);
-    		 
-    		this.contactRepository.save(contact);
-    		
-    		
-    	}catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-    	
-    	System.out.println(contact.getName());
-    	System.out.println(contact.getcId());
-    	return "normal/update_form";
-    }
-    
+    public String updateHandler(
+            @ModelAttribute Contact contact,
+            @RequestParam("profileImage") MultipartFile file,
+            Model m,
+            HttpSession session,
+            Principal principal) {
+
+        try {
+
+            // Fetch old contact
+        	Contact oldContactDetail =
+        	        this.contactRepository.findById((int) contact.getcId()).get();
+
+            // If a new image is uploaded
+            if (!file.isEmpty()) {
+
+                // Delete old image
+                File deleteDir = new ClassPathResource("static/img").getFile();
+                File oldFile = new File(deleteDir, oldContactDetail.getImage());
+
+                if (oldFile.exists()) {
+                    oldFile.delete();
+                }
+
+                // Save new image
+                File saveDir = new ClassPathResource("static/img").getFile();
+
+                Path path = Paths.get(
+                        saveDir.getAbsolutePath()
+                        + File.separator
+                        + file.getOriginalFilename());
+
+                Files.copy(
+                        file.getInputStream(),
+                        path,
+                        StandardCopyOption.REPLACE_EXISTING);
+
+                contact.setImage(file.getOriginalFilename());
+
+            } else {
+
+                // Keep old image
+                contact.setImage(oldContactDetail.getImage());
+            }
+
+            User user =
+                    this.userRepository.getUserByUserName(principal.getName());
+
+            contact.setUser(user);
+
+            this.contactRepository.save(contact);
+
+            session.setAttribute(
+                    "message",
+                    new Message("Your contact is updated!!", "success"));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            session.setAttribute(
+                    "message",
+                    new Message("Something went wrong!", "danger"));
+        }
+
+        return "redirect:/user/" + contact.getcId() + "/contact";
+    }    
     
     
     
