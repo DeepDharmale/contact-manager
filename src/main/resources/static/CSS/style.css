@@ -299,3 +299,20 @@ body:has(.sidebar:not(.active)) .content {
 	object-fit:cover;
 	
 }
+
+/* search bar */
+
+.search-container{
+	position:relative;
+	
+}
+
+.search-result{
+	position:absolute;
+    width:100%;
+    background:#fff;
+    border:1px solid gray;
+    display:none;
+    padding:10px;
+    
+}

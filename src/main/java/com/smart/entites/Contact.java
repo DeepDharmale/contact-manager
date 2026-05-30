@@ -1,5 +1,7 @@
 package com.smart.entites;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,7 +25,6 @@ public class Contact {
     private String email;
     private String phone;
     private String image;
-
     @Column(length = 500000)
     private String description;
 
