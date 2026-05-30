@@ -13,7 +13,26 @@
 <section>
 
     
-    <h1>This is a private dashboard</h1>
+   <div class="container">
+   
+   <div class="card">
+   <div class="card-body my-5">
+   <div class="container text-center font-italic">  <img th:src="@{'/img/' + ${user.imageUrl}}"
+     alt="User Image"
+     class="rounded-circle shadow mb-3"
+     style="width: 150px; height: 150px; object-fit: cover;"> </div>
+   
+ 
+   
+   <h1 class="text-center text-secondary mt-4">
+   Start a Adding Your Contacts
+   </h1>
+   
+   <a  th:href= "@{/user/add-contact}" class="btn btn-primary d-block mx-auto mt-4"> Add New Contact</a>
+   
+   </div>
+   </div>
+     </div>
 </section>
 
 </body>
